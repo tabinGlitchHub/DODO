@@ -6,34 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbarLay"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDex"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:layout_height="70dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:titleTextColor="@color/white" >
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarDex"
+            <TextView
+                android:id="@+id/toolBarText"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:title="DoDo"
-                app:titleTextColor="@color/white" />
+                android:layout_height="wrap_content"
+                android:text="DoDo"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"/>
 
-        </com.google.android.material.appbar.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bright_blue"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/top_curved_fragment_bg">
 
             <FrameLayout
                 android:id="@+id/fragmentFrame"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" />
+                android:layout_height="match_parent" />
 
         </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
 
 
     <com.google.android.material.bottomappbar.BottomAppBar
@@ -45,8 +65,8 @@
         app:elevation="0dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:layout_width="380dp"
             android:id="@+id/bottomNavBar"
+            android:layout_width="380dp"
             android:layout_height="60dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="10dp"
@@ -65,7 +85,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_add"
-        app:layout_anchor="@id/bottomNavBar"
-        app:elevation="2dp"/>
+        app:elevation="5dp"
+        app:layout_anchor="@id/bottomNavBar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

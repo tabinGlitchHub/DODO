@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="marine_teal">#23C2AF</color>
-    <color name="marine_teal_dark">#0DB7A3</color>
+    <color name="bright_blue">#17EAEA</color>
+    <color name="bright_blue_dark">#22D6D6</color>
     <color name="shadow_black">#656565</color>
-    <color name="grain_yellow">#CFF25B</color>
+    <color name="grain_yellow">#E8F25B</color>
     <color name="grain_yellow_dark">#C7ED49</color>
     <color name="default_card_bg">#FFE6FFEE</color>
     <color name="moderate_card_bg">#FFFFFDE6</color>

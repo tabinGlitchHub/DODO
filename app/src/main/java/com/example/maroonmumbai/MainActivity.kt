@@ -12,6 +12,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolBarTxtTodo = "Manage your Tasks!"
+        val toolBarTxtReminder = "Manage your Time!"
+        val toolBarTxtNotes = "Manage your Notes!"
+        val toolBarTxtClipB = "Manage your Clips!"
+
         bottomNavBar.menu.getItem(2).isEnabled = false
         val toDoFragment = ToDoFragment()
         val notesFragment = NotesFragment()
@@ -19,13 +24,26 @@ class MainActivity : AppCompatActivity() {
         val clipBoardFragment = ClipBoardFragment()
 
         setCurrentFragmentTo(toDoFragment)
+        toolBarText.text = toolBarTxtTodo
 
         bottomNavBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.tasksToDoItem -> setCurrentFragmentTo(toDoFragment)
-                R.id.NotesItem -> setCurrentFragmentTo(notesFragment)
-                R.id.ReminderItem -> setCurrentFragmentTo(reminderFragment)
-                R.id.ClipboardItem -> setCurrentFragmentTo(clipBoardFragment)
+                R.id.tasksToDoItem -> {
+                    setCurrentFragmentTo(toDoFragment)
+                    toolBarText.text = toolBarTxtTodo
+                }
+                R.id.NotesItem -> {
+                    setCurrentFragmentTo(notesFragment)
+                    toolBarText.text = toolBarTxtNotes
+                }
+                R.id.ReminderItem -> {
+                    setCurrentFragmentTo(reminderFragment)
+                    toolBarText.text = toolBarTxtReminder
+                }
+                R.id.ClipboardItem -> {
+                    setCurrentFragmentTo(clipBoardFragment)
+                    toolBarText.text = toolBarTxtClipB
+                }
             }
             true
         }
