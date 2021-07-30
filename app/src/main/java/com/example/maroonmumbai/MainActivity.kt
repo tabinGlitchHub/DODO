@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        // TODO: 7/29/21 implement sqlite and add button & start working on reminder/notes fragment 
     }
 
     // for switching between fragments when clicked on icons from bottom nav bar
