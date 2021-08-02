@@ -24,7 +24,17 @@ class AddPopUpDialog: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         noteBSButton.setOnClickListener {
-            Intent(activity, AddNoteActivity::class.java).also {
+            Intent(activity, EditNoteActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        reminderBSButton.setOnClickListener {
+            Intent(activity, EditReminderActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+        taskBSButton.setOnClickListener {
+            Intent(activity, EditTodoActivity::class.java).also {
                 startActivity(it)
             }
         }

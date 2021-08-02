@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_rounded_all_notes_model"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -15,19 +14,19 @@
             android:id="@+id/tvTitleNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_notes_title_model"
             android:text="Title"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/shadow_black" />
+            android:padding="5dp"
+            android:gravity="center_horizontal"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvDetailsNotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:background="@drawable/bg_notes_contents_model"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="Description"
+            android:padding="7dp"
             android:textSize="12sp" />
 
     </LinearLayout>
