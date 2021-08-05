@@ -1,38 +1,52 @@
-package com.example.maroonmumbai
+package com.example.maroonmumbai.ui.activities
 
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_todo.*
-import kotlinx.android.synthetic.main.pop_up_dialog.*
+import androidx.lifecycle.ViewModelProvider
+import com.example.maroonmumbai.R
+import com.example.maroonmumbai.db.MainDatabase
+import com.example.maroonmumbai.repository.HomeRepository
+import com.example.maroonmumbai.ui.fragments.*
+import com.example.maroonmumbai.ui.viewmodels.HomeViewModel
+import com.example.maroonmumbai.ui.viewmodels.HomeViewModelProviderFactory
+import kotlinx.android.synthetic.main.activity_home.*
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
+
+    lateinit var viewModel: HomeViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
 
+        //repository is the connection to database which in turn has access to the DAOs
+        //this is also where the database is first instantiated or connected depending on the instance
+        val homeRepository = HomeRepository(MainDatabase(this))
+        val vmProviderFactory = HomeViewModelProviderFactory(homeRepository)
+        //viewmodel is obtained from viewmodel provider factory which connects it to the
+        //viewmodel class
+        viewModel = ViewModelProvider(this,vmProviderFactory).get(HomeViewModel::class.java)
+
+        //constant strings
         val toolBarTxtTodo = "Manage your Tasks!"
         val toolBarTxtReminder = "Manage your Time!"
         val toolBarTxtNotes = "Manage your Notes!"
         val toolBarTxtClipB = "Manage your Clips!"
 
-        bottomNavBar.menu.getItem(2).isEnabled = false
+        //instances of fragments to load
         val toDoFragment = ToDoFragment()
         val notesFragment = NotesFragment()
         val reminderFragment = ReminderFragment()
         val clipBoardFragment = ClipBoardFragment()
 
+        bottomNavBar.menu.getItem(2).isEnabled = false
+
+        //initialize frame layout by default to-do fragment
         setCurrentFragmentTo(toDoFragment)
         toolBarText.text = toolBarTxtTodo
 
+        //switch fragments depending on the item clicked from bottom nav bar
         bottomNavBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.tasksToDoItem -> {
@@ -55,11 +69,10 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // TODO: 7/29/21 implement sqlite
-
+        //onclick listener for the '+' fab, this pops up a bottom sheet fragment for user to choose
         fab.setOnClickListener {
-            val modalbottomSheetFragment = AddPopUpDialog()
-            modalbottomSheetFragment.show(supportFragmentManager, modalbottomSheetFragment.tag)
+            val modalBottomSheetFragment = AddPopUpDialog()
+            modalBottomSheetFragment.show(supportFragmentManager, modalBottomSheetFragment.tag)
         }
     }
 

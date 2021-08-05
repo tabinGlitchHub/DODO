@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaroonMumbai">
         <activity
-            android:name=".EditTodoActivity"
+            android:name=".ui.activities.EditTodoActivity"
             android:exported="true" />
         <activity
-            android:name=".EditReminderActivity"
+            android:name=".ui.activities.EditReminderActivity"
             android:exported="true" />
         <activity
-            android:name=".EditNoteActivity"
+            android:name=".ui.activities.EditNoteActivity"
             android:exported="true" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

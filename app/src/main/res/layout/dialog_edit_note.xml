@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditNoteActivity">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_all_corner_white"
+    tools:context=".ui.activities.HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,16 +16,14 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/bright_blue"
             android:gravity="center"
             android:text="Edit Note"
-            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="7dp"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -37,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:background="@drawable/bg_rounded_all_corner_wht"
+                    android:background="@drawable/bg_rounded_all_corner_lightblue"
                     android:hint="Title"
                     android:paddingStart="10dp" />
 
@@ -53,9 +52,9 @@
             <EditText
                 android:id="@+id/edtTxtNoteDetails"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/bg_rounded_all_corner_wht"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_rounded_all_corner_lightblue"
                 android:gravity="top"
                 android:hint="Your Note.."
                 android:padding="10dp" />
@@ -65,15 +64,16 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSetNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fabSetNote"
-        android:src="@drawable/ic_check"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:contentDescription="confirm button"
+        android:src="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.97" />
 
