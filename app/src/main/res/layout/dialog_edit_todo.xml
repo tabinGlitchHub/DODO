@@ -25,32 +25,53 @@
             android:layout_height="match_parent"
             android:layout_margin="7dp">
 
-            <EditText
-                android:id="@+id/edtTxtTaskTitle"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputLayTitle"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_rounded_all_corner_lightblue"
-                android:hint="Title"
-                android:paddingStart="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:counterTextColor="@color/bright_blue_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/edtTxtTaskDetails"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtTxtTaskTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_rounded_all_corner_boxblue"
+                    android:hint="Title"
+                    android:maxLength="20" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputLayContent"
                 android:layout_width="match_parent"
-                android:layout_height="80sp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
+                app:counterTextColor="@color/bright_blue_dark"
                 android:background="@drawable/bg_rounded_all_corner_lightblue"
-                android:gravity="top"
-                android:hint="Your Task.."
-                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtTxtTaskTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/txtInputLayTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtTxtTaskDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/bg_rounded_all_corner_boxblue"
+                    android:hint="Your Task.."
+                    android:maxLength="50"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -61,7 +82,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtTxtTaskDetails">
+                app:layout_constraintTop_toBottomOf="@+id/txtInputLayContent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -89,7 +110,6 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView6">
-
 
 
                         <RadioButton
@@ -148,7 +168,7 @@
         android:id="@+id/fabSetTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="490dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:contentDescription="confirm button"
