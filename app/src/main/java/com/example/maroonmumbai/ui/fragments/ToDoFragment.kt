@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_todo.*
 
 class ToDoFragment: Fragment(R.layout.fragment_todo) {
 
-    private lateinit var viewModel: HomeViewModel
+    lateinit var viewModel: HomeViewModel
     lateinit var todoAdapter: TodoAdapter
     var todoList = ArrayList<TodoModelClass>()
 
@@ -65,7 +65,7 @@ class ToDoFragment: Fragment(R.layout.fragment_todo) {
     }
 
     private fun setUpRecyclerView(){
-        todoAdapter = TodoAdapter()
+        todoAdapter = TodoAdapter(this)
         rvToDO.also {
             it.adapter = todoAdapter
             it.layoutManager = LinearLayoutManager(activity)

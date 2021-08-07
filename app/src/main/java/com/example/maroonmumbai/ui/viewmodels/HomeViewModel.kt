@@ -3,7 +3,6 @@ package com.example.maroonmumbai.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maroonmumbai.model.CategoryModelClass
 import com.example.maroonmumbai.model.NotesModelClass
 import com.example.maroonmumbai.model.ReminderModelClass
 import com.example.maroonmumbai.model.TodoModelClass
@@ -26,6 +25,10 @@ class HomeViewModel(
 
     fun deleteTodo(todo: TodoModelClass) = viewModelScope.launch { homeRepository.deleteTodo(todo) }
 
+    fun setTodoDone(id:Int) = viewModelScope.launch { homeRepository.setTodoDone(id) }
+
+    fun setTodoNotDone(id:Int) = viewModelScope.launch { homeRepository.setTodoNotDone(id) }
+
     //----------------------GET, INSERT, DELETE NOTES----------------------
     fun getAllNotes() = homeRepository.getAllNotes()
 
@@ -43,12 +46,4 @@ class HomeViewModel(
     fun deleteReminder(reminder: ReminderModelClass) =
         viewModelScope.launch { homeRepository.deleteReminder(reminder) }
 
-    //----------------------GET, INSERT, DELETE REMINDER----------------------
-    fun getAllCategories() = homeRepository.getAllCategories()
-
-    fun insertCategory(category: CategoryModelClass) =
-        viewModelScope.launch { homeRepository.postCategory(category) }
-
-    fun deleteCategory(category: CategoryModelClass) =
-        viewModelScope.launch { homeRepository.deleteCategory(category) }
 }

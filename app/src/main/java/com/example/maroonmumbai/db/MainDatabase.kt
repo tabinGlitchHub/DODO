@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.maroonmumbai.model.CategoryModelClass
 import com.example.maroonmumbai.model.NotesModelClass
 import com.example.maroonmumbai.model.ReminderModelClass
 import com.example.maroonmumbai.model.TodoModelClass
@@ -13,17 +12,15 @@ import com.example.maroonmumbai.model.TodoModelClass
     entities = [
         NotesModelClass::class,
         TodoModelClass::class,
-        ReminderModelClass::class,
-        CategoryModelClass::class
+        ReminderModelClass::class
     ],
-    version = 1
+    version = 2
 )
 abstract class MainDatabase: RoomDatabase() {
 
     abstract fun getNotesDao(): NotesDao
     abstract fun getTodoDao(): TodoDao
     abstract fun getReminderDao(): ReminderDao
-    abstract fun getCategoryDao(): CategoryDao
 
     companion object {
 
@@ -40,7 +37,7 @@ abstract class MainDatabase: RoomDatabase() {
                 context.applicationContext,
                 MainDatabase::class.java,
                 "main_database.db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
     }
 
 }

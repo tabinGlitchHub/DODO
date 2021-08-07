@@ -11,4 +11,4 @@ data class NotesModelClass(
     var id: Int? = null,
     var title: String,
     var details: String,
-    var categoryId: Int?)
+    var category: String?)

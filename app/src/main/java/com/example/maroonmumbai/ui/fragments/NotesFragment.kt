@@ -45,6 +45,7 @@ class NotesFragment: Fragment(R.layout.fragment_notes) {
     }
 
     private fun getGridCount(screenWidth: Int): Int{
+        //where i90 is the hardcoded width of an individual note item in the list
         return screenWidth / 190
     }
 }

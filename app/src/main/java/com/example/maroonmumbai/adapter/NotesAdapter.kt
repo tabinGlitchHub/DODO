@@ -10,6 +10,8 @@ import com.example.maroonmumbai.R
 import com.example.maroonmumbai.model.NotesModelClass
 import com.example.maroonmumbai.ui.fragments.NotesFragment
 import kotlinx.android.synthetic.main.model_notes_item.view.*
+import kotlinx.android.synthetic.main.model_notes_item.view.tvNoteCategory
+import kotlinx.android.synthetic.main.model_todo_item.view.*
 
 class NotesAdapter(frag: NotesFragment) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
@@ -41,10 +43,20 @@ class NotesAdapter(frag: NotesFragment) : RecyclerView.Adapter<NotesAdapter.Note
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val notesList = differ.currentList
-
+        val item = notesList[position]
         holder.itemView.also {
-            it.tvTitleNotes.text = notesList[position].title
-            it.tvDetailsNotes.text = notesList[position].details
+            it.tvTitleNotes.text = item.title
+            it.tvDetailsNotes.text = item.details
+            setCardCategory(item.category,it)
+        }
+    }
+
+    // set the chip visibility if no category was provided by the user else update text
+    private fun setCardCategory(category: String?, iv: View) {
+        if (category != null){
+            iv.tvNoteCategory.text = category
+        }else{
+            iv.tvNoteCategory.visibility = View.GONE
         }
     }
 

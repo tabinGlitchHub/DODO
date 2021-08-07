@@ -14,4 +14,11 @@ interface TodoDao {
 
     @Delete
     suspend fun deleteTodo(todo: TodoModelClass)
+
+    //true = 1 , false = 0
+    @Query("UPDATE table_todos SET isDone = 1 WHERE id = :id")
+    suspend fun setTodoDone(id: Int)
+
+    @Query("UPDATE table_todos SET isDone = 0 WHERE id = :id")
+    suspend fun setTodoNotDone(id: Int)
 }

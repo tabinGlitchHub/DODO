@@ -13,5 +13,5 @@ data class ReminderModelClass(
     var date: String,
     var time: String,
     var status: Boolean = false,
-    var categoryId: Int
+    var category: String?
 )

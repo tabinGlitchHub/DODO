@@ -12,5 +12,5 @@ data class TodoModelClass(
     var title:String,
     var description: String?,
     var isDone: Boolean = false,
-    var label: String,
-    var categoryId: Int?)
+    var label: String = "L",
+    var category: String?)
