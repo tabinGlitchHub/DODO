@@ -5,8 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable/bg_notes_contents_model.xml" value="0.2162037037037037" />
         <entry key="app/src/main/res/drawable/bg_notes_title_model.xml" value="0.2162037037037037" />
+        <entry key="app/src/main/res/drawable/bg_reminder_card.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/bg_rounded_all_corner_boxblue.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/bg_rounded_all_corner_completed_chip.xml" value="0.21324200913242009" />
+        <entry key="app/src/main/res/drawable/bg_rounded_all_corner_lightblue_img_btn.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/bg_rounded_all_corner_lightyellow.xml" value="0.2162037037037037" />
         <entry key="app/src/main/res/drawable/bg_rounded_all_corner_moderate_chip.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/bg_rounded_all_corner_most_chip.xml" value="0.21324200913242009" />
@@ -19,6 +21,7 @@
         <entry key="app/src/main/res/drawable/bg_test.xml" value="0.2162037037037037" />
         <entry key="app/src/main/res/drawable/bottom_nav_icon.xml" value="0.2162037037037037" />
         <entry key="app/src/main/res/drawable/ic_delete_light_red.xml" value="0.2162037037037037" />
+        <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/ic_label_completed.xml" value="0.2162037037037037" />
         <entry key="app/src/main/res/drawable/ic_label_default.xml" value="0.21324200913242009" />
         <entry key="app/src/main/res/drawable/ic_label_moderate.xml" value="0.21324200913242009" />
@@ -31,7 +34,7 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.18935185185185185" />
         <entry key="app/src/main/res/layout/dialog_edit_note.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/dialog_edit_reminder.xml" value="0.20185185185185187" />
+        <entry key="app/src/main/res/layout/dialog_edit_reminder.xml" value="0.22" />
         <entry key="app/src/main/res/layout/dialog_edit_todo.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_add_pop_up.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.20185185185185187" />
@@ -39,6 +42,7 @@
         <entry key="app/src/main/res/layout/fragment_todo.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/layout/model_category_chips.xml" value="0.1472972972972973" />
         <entry key="app/src/main/res/layout/model_notes_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/model_reminder_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/model_todo_item.xml" value="0.18" />
         <entry key="app/src/main/res/layout/pop_up_add.xml" value="0.20185185185185187" />
         <entry key="app/src/main/res/layout/pop_up_dialog.xml" value="0.25" />

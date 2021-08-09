@@ -41,7 +41,10 @@ class AddPopUpDialog() : BottomSheetDialogFragment() {
             this.dismiss()
         }
         reminderBSButton.setOnClickListener {
-            //Todo implement dialog
+            val dialogFragment = EditReminderFragment()
+            activity?.supportFragmentManager?.let { fragManager -> dialogFragment.show(fragManager, dialogFragment.tag) }
+
+            this.dismiss()
         }
         taskBSButton.setOnClickListener {
             val dialogFragment = EditTodoFragment()

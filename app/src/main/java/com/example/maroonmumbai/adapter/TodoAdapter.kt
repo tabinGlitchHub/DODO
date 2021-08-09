@@ -2,7 +2,6 @@ package com.example.maroonmumbai.adapter
 
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.maroonmumbai.R
 import com.example.maroonmumbai.model.TodoModelClass
 import com.example.maroonmumbai.ui.fragments.ToDoFragment
-import kotlinx.android.synthetic.main.model_category_chips.view.*
 import kotlinx.android.synthetic.main.model_todo_item.view.*
 
 class TodoAdapter(frag: ToDoFragment) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
@@ -48,7 +46,7 @@ class TodoAdapter(frag: ToDoFragment) : RecyclerView.Adapter<TodoAdapter.TodoVie
             it.tvTitle.text = item.title
             it.tvDescription.text = item.description
             //load the effects of the task as per the state of task
-            if(item.isDone) taskCompletedEffects(it) else {
+            if (item.isDone) taskCompletedEffects(it) else {
                 taskNotCompletedEffects(it)
                 setCardStatus(item.label, it)
             }
@@ -58,9 +56,9 @@ class TodoAdapter(frag: ToDoFragment) : RecyclerView.Adapter<TodoAdapter.TodoVie
 
     // set the chip visibility if no category was provided by the user else update text
     private fun setCardCategory(category: String?, iv: View) {
-        if (category != null){
+        if (category != null) {
             iv.tvCategory.text = category
-        }else{
+        } else {
             iv.tvCategory.visibility = View.GONE
         }
     }
@@ -70,7 +68,7 @@ class TodoAdapter(frag: ToDoFragment) : RecyclerView.Adapter<TodoAdapter.TodoVie
     }
 
     //all the visual effects needed to be done when task was marked completed
-    private fun taskCompletedEffects(iv: View){
+    private fun taskCompletedEffects(iv: View) {
         //change the color of layout and items
         iv.ivLabel.setImageResource(R.drawable.ic_label_completed)
         iv.cvTodo.setCardBackgroundColor(Color.parseColor("#FFD6D6D6"))
@@ -83,7 +81,7 @@ class TodoAdapter(frag: ToDoFragment) : RecyclerView.Adapter<TodoAdapter.TodoVie
         iv.cbToDo.isChecked = true
     }
 
-    private fun taskNotCompletedEffects(iv: View){
+    private fun taskNotCompletedEffects(iv: View) {
         //revert the strike through effect on title and description
         iv.tvTitle.paintFlags =
             iv.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()

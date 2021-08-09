@@ -40,15 +40,17 @@ class EditNoteFragment: DialogFragment(R.layout.dialog_edit_note){
 
         val dialog = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_note, null)
 
-        dialog.chipPersonal.setOnClickListener { category = "Personal" }
-        dialog.chipEducation.setOnClickListener { category = "Education" }
-        dialog.chipEntertainment.setOnClickListener { category = "Entertainment" }
-        dialog.chipFitness.setOnClickListener { category = "Fitness" }
-        dialog.chipGroceries.setOnClickListener { category = "Groceries" }
-        dialog.chipHome.setOnClickListener { category = "Home" }
-        dialog.chipOther.setOnClickListener { category = null }
-        dialog.chipShopping.setOnClickListener { category = "Shopping" }
-        dialog.chipWork.setOnClickListener { category = "Work" }
+        dialog.also {
+            it.chipPersonal.setOnClickListener { category = "Personal" }
+            it.chipEducation.setOnClickListener { category = "Education" }
+            it.chipEntertainment.setOnClickListener { category = "Entertainment" }
+            it.chipFitness.setOnClickListener { category = "Fitness" }
+            it.chipGroceries.setOnClickListener { category = "Groceries" }
+            it.chipHome.setOnClickListener { category = "Home" }
+            it.chipOther.setOnClickListener { category = null }
+            it.chipShopping.setOnClickListener { category = "Shopping" }
+            it.chipWork.setOnClickListener { category = "Work" }
+        }
 
         dialog.fabSetNote.setOnClickListener {
             //collect user input about the note to be entered
