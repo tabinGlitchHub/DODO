@@ -3,15 +3,16 @@ package com.example.maroonmumbai.ui.fragments
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.example.maroonmumbai.R
 import com.example.maroonmumbai.model.ReminderModelClass
+import com.example.maroonmumbai.service.ReminderService
 import com.example.maroonmumbai.ui.activities.HomeActivity
 import com.example.maroonmumbai.ui.viewmodels.HomeViewModel
 import com.example.maroonmumbai.util.UtilityFunctions
@@ -23,96 +24,160 @@ import java.util.*
 class EditReminderFragment : DialogFragment(R.layout.dialog_edit_reminder) {
 
     private lateinit var viewModel: HomeViewModel
-    private var category: String? = null
-    private var date: String? = null
-    private var time: String? = null
+    private lateinit var reminderService: ReminderService
+    //inputs for reminder model
+    private var inTitle: String? = null
+    private var inDate: String? = null
+    private var inTime: String? = null
+    private var inCategory: String? = null
+    //Textview instance to display final date and time in String
+    private lateinit var finalTextView: TextView
     private val util = UtilityFunctions()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
+
         viewModel = (activity as HomeActivity).viewModel
+        //create a service instance, will be used for setting up notification
+        reminderService = ReminderService(activity as HomeActivity)
 
         val dialog = LayoutInflater.from(activity).inflate(R.layout.dialog_edit_reminder, null)
 
+        finalTextView = dialog.tvDisplayReminderDate
+
         dialog.also {
-            it.chipPersonal.setOnClickListener { category = "Personal" }
-            it.chipEducation.setOnClickListener { category = "Education" }
-            it.chipEntertainment.setOnClickListener { category = "Entertainment" }
-            it.chipFitness.setOnClickListener { category = "Fitness" }
-            it.chipGroceries.setOnClickListener { category = "Groceries" }
-            it.chipHome.setOnClickListener { category = "Home" }
-            it.chipOther.setOnClickListener { category = null }
-            it.chipShopping.setOnClickListener { category = "Shopping" }
-            it.chipWork.setOnClickListener { category = "Work" }
+            it.chipPersonal.setOnClickListener { inCategory = "Personal" }
+            it.chipEducation.setOnClickListener { inCategory = "Education" }
+            it.chipEntertainment.setOnClickListener { inCategory = "Entertainment" }
+            it.chipFitness.setOnClickListener { inCategory = "Fitness" }
+            it.chipGroceries.setOnClickListener { inCategory = "Groceries" }
+            it.chipHome.setOnClickListener { inCategory = "Home" }
+            it.chipOther.setOnClickListener { inCategory = null }
+            it.chipShopping.setOnClickListener { inCategory = "Shopping" }
+            it.chipWork.setOnClickListener { inCategory = "Work" }
         }
 
-        dialog.btnEditDate.setOnClickListener { setDate(dialog.tvDate) }
+        //textwatcher to update 'inTitle' without needing to press final submit button
+        //without this, the 'btnEditDateTime' button would input inTitle as null always
+        dialog.edtTxtReminderTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable?) {}
 
-        dialog.btnEditTime.setOnClickListener { setTime(dialog.tvTime) }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                inTitle = s.toString()
+            }
+
+        })
+
+        //check if 'inTitle' is null and warn user to fill it first, to prevent null value field,
+        //this is done because this string will be passed to service and then from service to
+        // receiver, receiver will then display this String in the title of Notification
+        dialog.btnEditDateTime.setOnClickListener {
+            if(inTitle == null){
+                util.makeToast(
+                    "Please enter a Title first!",
+                    activity as HomeActivity,
+                    Toast.LENGTH_SHORT
+                )
+            }else{
+                setDateTime { timeInMillis ->
+                    reminderService.setExactAlarm(timeInMillis, inTitle.toString())
+                }
+            }
+        }
 
         //on Submit collect this information from dialog
         dialog.fabSetReminder.setOnClickListener {
             //create a model from user input fields
             val reminder = ReminderModelClass(
                 null,
-                dialog.edtTxtReminderTitle.text.toString(),
-                date.toString(),
-                time.toString(),
+                inTitle.toString(),
+                inDate.toString(),
+                inTime.toString(),
                 true,
-                category
+                inCategory
             )
-            //insert the model in the database with viewmodel
-            viewModel.insertReminder(reminder)
-            //dismiss after done
-            this.dismiss()
-            util.makeToast(
-                "Reminder added successfully!",
-                activity as HomeActivity,
-                Toast.LENGTH_LONG
-            )
+            if (inTitle != null && inDate != null && inTime != null) {
+                //insert the model in the database with viewmodel
+                viewModel.insertReminder(reminder)
+                //dismiss after done
+                this.dismiss()
+                util.makeToast(
+                    "Reminder added successfully!",
+                    activity as HomeActivity,
+                    Toast.LENGTH_LONG
+                )
+            } else {
+                util.makeToast(
+                    "Please fill all the details",
+                    activity as HomeActivity,
+                    Toast.LENGTH_LONG
+                )
+            }
         }
         // create a materialdialog using styles for rounded corner and inflate dialog
         return MaterialAlertDialogBuilder(requireActivity(), R.style.MaterialAlertDialog_rounded)
             .setView(dialog).create()
     }
 
-    private fun setTime(tv: TextView) {
-        val calendar = Calendar.getInstance()
-        val currentHour = calendar.get(Calendar.HOUR)
-        val currentMinute = calendar.get(Calendar.MINUTE)
+    // Take Date and Time inputs together from the user this makes it easier to calculate
+    // milliseconds which in turn helps in setting a service with fixed millisecond
+    private fun setDateTime(callBack: (Long) -> Unit) {
+        Calendar.getInstance().apply {
+            //set second and millisecond to 0, not doing this would consider the very moment
+            //this function was called which necessarily won't be 0. this acts as an exact marker
+            //for millisecond calculation from minute to minute
+            this.set(Calendar.SECOND, 0)
+            this.set(Calendar.MILLISECOND, 0)
 
-        TimePickerDialog(activity, { view, hourOfDay, minute ->
-            var hour = hourOfDay
-            var amOrPm = ""
-            hour = if (hour > 12) {
-                amOrPm = "pm"
-                hour - 12
-            } else {
-                amOrPm = "am"
-                hour
-            }
-            // ------stored as hh:mm xm ---- string will be of length 8 always
-            time = "${doubleDigitNum(hour)}:${doubleDigitNum(minute)} $amOrPm"
-            tv.text = time
-        }, currentHour, currentMinute, false).show()
-    }
+            //First let user pick date from DatePickerDialog then time from TimePickerDialog
+            // in this order
+            DatePickerDialog(
+                activity as HomeActivity, { view, year, month, day ->
+                    this.set(Calendar.YEAR, year)
+                    this.set(Calendar.MONTH, month)
+                    this.set(Calendar.DAY_OF_MONTH, day)
 
-    private fun setDate(tv: TextView) {
-        val calendar = Calendar.getInstance()
-        val currentYear = calendar.get(Calendar.YEAR)
-        val currentMonth = calendar.get(Calendar.MONTH)
-        val currentDay = calendar.get(Calendar.DAY_OF_MONTH)
+                    TimePickerDialog(
+                        activity as HomeActivity, { view, hour, min ->
+                            this.set(Calendar.HOUR_OF_DAY, hour)
+                            this.set(Calendar.MINUTE, min)
 
-        activity?.let {
-            DatePickerDialog(it, { view, selectedYear, selectedMonth, selectedDayOfMonth ->
-                val day = doubleDigitNum(selectedDayOfMonth)
-                val month = doubleDigitNum(selectedMonth + 1)
-                date = "$day-$month-$selectedYear"
-                tv.text = date
-            }, currentYear, currentMonth, currentDay).show()
+                            // formatting of 24 hour to 12 hour format and getting am/pm, this could
+                            //be done with an external formatter but i like the work
+                            val amOrPm: String
+                            val formatHour: Int
+                            if (hour > 12) {
+                                formatHour = hour - 12
+                                amOrPm = "pm"
+                            } else {
+                                formatHour = hour
+                                amOrPm = "am"
+                            }
+                            val txtDate = "${doubleDigitNum(day)}-${doubleDigitNum(month)}-$year"
+                            val txtTime =
+                                "${doubleDigitNum(formatHour)}:${doubleDigitNum(min)}$amOrPm"
+                            val displayText = "Reminder set for, $txtDate on $txtTime."
+                            //collect time and date which will be filled in the reminder model
+                            // on Submission
+                            inDate = txtDate
+                            inTime = txtTime
+                            finalTextView.text = displayText
+                            callBack(this.timeInMillis)
+                        }, this.get(Calendar.HOUR_OF_DAY),
+                        this.get(Calendar.MINUTE),
+                        false
+                    ).show()
+                }, this.get(Calendar.YEAR),
+                this.get(Calendar.MONTH),
+                this.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
     }
 
+    //to TimePickerDialog and DatePickerDialog return a simple Integer, this function converts
+    //single digit integers to double digits for aesthetic purposes.
+    //eg. 1 -> 01, 9 -> 09, 12 -> 12
     private fun doubleDigitNum(input: Int): String {
         if (input < 10) {
             return "0$input"

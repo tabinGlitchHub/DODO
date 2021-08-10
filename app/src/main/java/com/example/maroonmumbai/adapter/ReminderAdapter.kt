@@ -49,7 +49,10 @@ class ReminderAdapter(frag: ReminderFragment): RecyclerView.Adapter<ReminderAdap
             it.tvTitleReminder.text = reminder.title
             it.tvTimeReminer.text = reminder.time
             it.tvDateReminder.text = reminder.date
-            it.tvCategoryReminder.text = reminder.category
+            if(reminder.category != null)
+                it.tvCategoryReminder.text = reminder.category
+            else
+                it.tvCategoryReminder.visibility = View.GONE
         }
 
     }

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.maroonmumbai"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -69,5 +69,8 @@ dependencies {
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+
+    // Notification
+    implementation "io.karn:notify:1.3.0"
 
 }
