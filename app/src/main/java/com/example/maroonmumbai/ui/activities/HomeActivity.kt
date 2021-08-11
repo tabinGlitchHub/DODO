@@ -1,7 +1,12 @@
 package com.example.maroonmumbai.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.maroonmumbai.R
@@ -15,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_home.*
 class HomeActivity : AppCompatActivity() {
 
     lateinit var viewModel: HomeViewModel
+    val CHANNEL_ID = "DODO_CHANNEL_ID"
+    val CHANNEL_NAME = "DODO_CHANNEL_NAME"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +33,9 @@ class HomeActivity : AppCompatActivity() {
         val vmProviderFactory = HomeViewModelProviderFactory(homeRepository)
         //viewmodel is obtained from viewmodel provider factory which connects it to the
         //viewmodel class
-        viewModel = ViewModelProvider(this,vmProviderFactory).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this, vmProviderFactory).get(HomeViewModel::class.java)
+
+        createNotificationChannel()
 
         //constant strings
         val toolBarTxtTodo = "Manage your Tasks!"
@@ -42,9 +51,17 @@ class HomeActivity : AppCompatActivity() {
 
         bottomNavBar.menu.getItem(2).isEnabled = false
 
-        //initialize frame layout by default to-do fragment
-        setCurrentFragmentTo(toDoFragment)
-        toolBarText.text = toolBarTxtTodo
+        val intentContent = intent.getStringExtra("EXTRA_TRIGGER_REMINDER")
+
+        //initialize frame layout by default to-do fragment if there wasn't any string extra received
+        //check 'ReminderReceiver' for where this extra was passed.
+        if (intentContent == "reminder") {
+            setCurrentFragmentTo(reminderFragment)
+            toolBarText.text = toolBarTxtReminder
+        } else {
+            setCurrentFragmentTo(toDoFragment)
+            toolBarText.text = toolBarTxtTodo
+        }
 
         //switch fragments depending on the item clicked from bottom nav bar
         bottomNavBar.setOnNavigationItemSelectedListener {
@@ -73,6 +90,22 @@ class HomeActivity : AppCompatActivity() {
         fab.setOnClickListener {
             val modalBottomSheetFragment = AddPopUpDialog()
             modalBottomSheetFragment.show(supportFragmentManager, modalBottomSheetFragment.tag)
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                lightColor = Color.CYAN
+                enableLights(true)
+            }
+
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
         }
     }
 
